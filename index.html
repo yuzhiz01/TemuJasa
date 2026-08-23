@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -28,7 +28,7 @@
         <div class="navbar-container">
 
             <!-- LOGO -->
-            <a href="http://localhost" class="logo" title="TemuJasa Beranda">
+            <a href="/" class="logo" title="TemuJasa Beranda">
                 <div class="logo-icon">
                     <i class="fa-solid fa-location-dot"></i>
                 </div>
@@ -67,8 +67,8 @@
                     <span class="badge-count" id="cartBadgeCount">0</span>
                 </button>
 
-                                    <a href="http://localhost/login" class="btn-header-auth btn-header-login">Login</a>
-                    <a href="http://localhost/register" class="btn-header-auth btn-header-register">Daftar</a>
+                                    <a href="/login" class="btn-header-auth btn-header-login">Login</a>
+                    <a href="/register" class="btn-header-auth btn-header-register">Daftar</a>
                 
                 
                 <!-- USER PROFILE -->
@@ -126,46 +126,46 @@
 <section class="section-container">
     <div class="section-heading">
         <h2>Kategori</h2>
-                <a href="http://localhost/login">Lihat semua</a>
+                <a href="/login">Lihat semua</a>
             </div>
         <div class="category-grid">
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>AC &amp; Pendingin</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Acara &amp; Event</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Elektronik</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Kebersihan</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Kecantikan &amp; Kesehatan</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Lainnya</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Otomotif</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Pendidikan &amp; Les</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Renovasi &amp; Perbaikan</span>
         </a>
-                <a href="http://localhost/login" class="category-card">
+                <a href="/login" class="category-card">
             <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
             <span>Rumah Tangga</span>
         </a>
@@ -178,10 +178,10 @@
             <h2>Penyedia Jasa</h2>
             <p>Penyedia jasa terdaftar di TemuJasa</p>
         </div>
-                <a href="http://localhost/login">Lihat semua</a>
+                <a href="/login">Lihat semua</a>
             </div>
         <div class="business-grid">
-                <a class="business-card" href="http://localhost/penyedia-profil/4">
+                <a class="business-card" href="/penyedia-profil/4">
             <div class="business-image" style="background:#f0ecff;display:flex;align-items:center;justify-content:center;min-height:120px;">
                 <i class="fa-solid fa-user-tie" style="font-size:48px;color:#4f2aa8;"></i>
             </div>
@@ -194,7 +194,7 @@
                 </div>
             </div>
         </a>
-                <a class="business-card" href="http://localhost/penyedia-profil/2">
+                <a class="business-card" href="/penyedia-profil/2">
             <div class="business-image" style="background:#f0ecff;display:flex;align-items:center;justify-content:center;min-height:120px;">
                 <i class="fa-solid fa-user-tie" style="font-size:48px;color:#4f2aa8;"></i>
             </div>
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const simpanKeSession = (lat, lng) => {
         localStorage.setItem('geo.lat', lat);
         localStorage.setItem('geo.lng', lng);
-        fetch('http://localhost/simpan-lokasi', {
+        fetch('//simpan-lokasi', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -280,7 +280,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="footer-col">
                     <h4 class="footer-title">Jelajahi</h4>
                     <ul class="footer-links">
-                        <li><a href="http://localhost">Beranda</a></li>
+                        <li><a href="/">Beranda</a></li>
                                             </ul>
                 </div>
 
@@ -288,11 +288,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="footer-col">
                     <h4 class="footer-title">Kategori Populer</h4>
                     <ul class="footer-links">
-                        <li><a href="http://localhost/jasa/cari">Kuliner & Makanan</a></li>
-                        <li><a href="http://localhost/jasa/cari">Jasa Servis & Montir</a></li>
-                        <li><a href="http://localhost/jasa/cari">Laundry & Kebersihan</a></li>
-                        <li><a href="http://localhost/jasa/cari">Tenaga Harian Lepas</a></li>
-                        <li><a href="http://localhost/jasa/cari">Sembako & Kebutuhan</a></li>
+                        <li><a href="/jasa/cari">Kuliner & Makanan</a></li>
+                        <li><a href="/jasa/cari">Jasa Servis & Montir</a></li>
+                        <li><a href="/jasa/cari">Laundry & Kebersihan</a></li>
+                        <li><a href="/jasa/cari">Tenaga Harian Lepas</a></li>
+                        <li><a href="/jasa/cari">Sembako & Kebutuhan</a></li>
                     </ul>
                 </div>
 
@@ -307,7 +307,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>
                     <div class="footer-badge-mitra">
                         <span>Punya usaha UMKM atau Jasa?</span>
-                                                    <a href="http://localhost/register" class="btn-join-mitra">Daftar Jadi Mitra</a>
+                                                    <a href="/register" class="btn-join-mitra">Daftar Jadi Mitra</a>
                                                                     </div>
                 </div>
 
@@ -330,12 +330,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
     <nav class="mobile-navigation" id="mobileNav">
-        <a href="http://localhost" class="mobile-nav-item active">
+        <a href="/" class="mobile-nav-item active">
             <i class="fa-solid fa-house"></i>
             <span>Beranda</span>
         </a>
 
-                <a href="http://localhost/login" class="mobile-nav-item">
+                <a href="/login" class="mobile-nav-item">
             <i class="fa-solid fa-right-to-bracket"></i>
             <span>Login</span>
         </a>
@@ -364,7 +364,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <h4>Keranjang masih kosong</h4>
                 <p>Yuk cari produk kuliner atau jasa lokal favoritmu sekarang!</p>
-                <a href="http://localhost" class="btn-shop-now" onclick="TemuJasa.closeCart()">Mulai Belanja</a>
+                <a href="/" class="btn-shop-now" onclick="TemuJasa.closeCart()">Mulai Belanja</a>
             </div>
         </div>
 
@@ -563,3 +563,4 @@ document.addEventListener('DOMContentLoaded', () => {
     
 </body>
 </html>
+
