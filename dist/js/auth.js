@@ -37,11 +37,31 @@ const TJAuth = {
     },
 
     getBaseUrl() {
+        const href = window.location.href;
         const path = window.location.pathname;
+
+        // 1. Jika URL memuat /dist/, jadikan folder /dist/ sebagai root aplikasi
+        const distIdx = href.indexOf('/dist/');
+        if (distIdx !== -1) {
+            return href.substring(0, distIdx + 6);
+        }
+
+        // 2. Jika di-host pada GitHub Pages (contoh: https://user.github.io/repo/)
         if (window.location.hostname.endsWith('.github.io')) {
             const match = path.match(/^(\/[^\/]+)/);
-            return (match ? match[1] : '') + '/';
+            const repoPath = match ? match[1] : '';
+            return window.location.origin + repoPath + '/';
         }
+
+        // 3. Jika di-host lokal pada XAMPP (contoh: http://localhost/TemuJasa/)
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            const parts = path.split('/').filter(Boolean);
+            if (parts.length > 0 && parts[0].toLowerCase() === 'temujasa') {
+                return window.location.origin + '/' + parts[0] + '/dist/';
+            }
+        }
+
+        // 4. Default untuk Vercel atau Domain Utama
         return '/';
     },
 

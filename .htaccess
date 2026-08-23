@@ -1,0 +1,8 @@
+DirectoryIndex index.php index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    # Otomatis arahkan request root ke dist/
+    RewriteCond %{REQUEST_URI} ^/TemuJasa/?$ [NC]
+    RewriteRule ^(.*)$ /TemuJasa/dist/ [L,R=302]
+</IfModule>

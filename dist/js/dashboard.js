@@ -39,8 +39,9 @@ const TJDash = {
     goToRole() {
         const role = document.getElementById('selectedRole')?.value;
         if (!role) { alert('Pilih role terlebih dahulu'); return; }
-        const map = { pelanggan: '/pelanggan/dashboard', penyedia: '/penyedia/dashboard', admin: '/admin/dashboard' };
-        window.location.href = map[role] || '/';
+        const map = { pelanggan: 'pelanggan/dashboard/', penyedia: 'penyedia/dashboard/', admin: 'admin/dashboard/' };
+        const base = (typeof TJAuth !== 'undefined' && TJAuth.getBaseUrl) ? TJAuth.getBaseUrl() : '../../';
+        window.location.href = base + (map[role] || '');
     },
     init() {
         document.addEventListener('click', e => {

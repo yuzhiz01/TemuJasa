@@ -12,7 +12,8 @@ function searchTemuJasa() {
         input.focus();
         return;
     }
-    window.location.href = '/cari?q=' + encodeURIComponent(keyword);
+    const base = (typeof TJAuth !== 'undefined' && TJAuth.getBaseUrl) ? TJAuth.getBaseUrl() : './';
+    window.location.href = base + 'jasa/cari/?q=' + encodeURIComponent(keyword);
 }
 
 /* ---- CART STATE ---- */
@@ -524,7 +525,8 @@ window.TemuJasa = {
         });
         input.addEventListener('keypress', e => {
             if (e.key === 'Enter' && input.value.trim()) {
-                window.location.href = '/cari?q=' + encodeURIComponent(input.value.trim());
+                const base = (typeof TJAuth !== 'undefined' && TJAuth.getBaseUrl) ? TJAuth.getBaseUrl() : './';
+                window.location.href = base + 'jasa/cari/?q=' + encodeURIComponent(input.value.trim());
             }
         });
         if (input.value) clearBtn.style.display = 'flex';
