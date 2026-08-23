@@ -30,12 +30,25 @@ if ((isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) && $dbConn === 'sqlite
 }
 
 try {
-    // Forward to public/index.php
-    require __DIR__ . '/../public/index.php';
+    require __DIR__ . '/../vendor/autoload.php';
+
+    /** @var \Illuminate\Foundation\Application $app */
+    $app = require __DIR__ . '/../bootstrap/app.php';
+
+    $kernel = $app->make(\Illuminate\Contracts\Http\Kernel::class);
+    
+    // Explicitly bootstrap to catch any configuration/provider errors
+    $kernel->bootstrap();
+
+    $request = \Illuminate\Http\Request::capture();
+    $response = $kernel->handle($request);
+    $response->send();
+    $kernel->terminate($request, $response);
 } catch (\Throwable $e) {
     http_response_code(500);
     header('Content-Type: text/plain; charset=utf-8');
-    echo "=== Laravel Error on Vercel ===\n\n";
+    echo "=== Laravel Bootstrap/Runtime Error on Vercel ===\n\n";
+    echo "Class: " . get_class($e) . "\n";
     echo "Message: " . $e->getMessage() . "\n";
     echo "File: " . $e->getFile() . ":" . $e->getLine() . "\n\n";
     echo "Trace:\n" . $e->getTraceAsString();
