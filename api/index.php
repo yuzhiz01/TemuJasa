@@ -20,7 +20,8 @@ foreach ($dirs as $dir) {
 }
 
 // If running in Vercel and using SQLite, copy database to /tmp if needed
-if ((isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) && getenv('DB_CONNECTION') === 'sqlite') {
+$dbConn = $_ENV['DB_CONNECTION'] ?? $_SERVER['DB_CONNECTION'] ?? getenv('DB_CONNECTION') ?: 'sqlite';
+if ((isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) && $dbConn === 'sqlite') {
     $sqliteSrc = __DIR__ . '/../database/database.sqlite';
     $sqliteDst = '/tmp/database.sqlite';
     if (file_exists($sqliteSrc) && !file_exists($sqliteDst)) {
