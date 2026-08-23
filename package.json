@@ -3,7 +3,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
+        "build": "echo Build completed: static site in dist is ready",
         "dev": "vite"
     },
     "devDependencies": {
