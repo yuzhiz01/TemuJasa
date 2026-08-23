@@ -4,15 +4,14 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
-return Application::configure(basePath: dirname(__DIR__))
+$app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Vercel menjalankan aplikasi di balik proxy — wajib agar
-        // URL, redirect, dan secure cookie terdeteksi sebagai HTTPS.
+        // Vercel menjalankan aplikasi di balik proxy
         $middleware->trustProxies(at: '*');
 
         $middleware->alias([
@@ -24,3 +23,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();
+
+// Ganti direktori storage ke /tmp jika berjalan di lingkungan serverless Vercel
+if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
+    $app->useStoragePath('/tmp/storage');
+}
+
+return $app;
