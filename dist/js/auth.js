@@ -36,9 +36,18 @@ const TJAuth = {
         localStorage.setItem(this.SESSION_KEY, JSON.stringify(user));
     },
 
+    getBaseUrl() {
+        const path = window.location.pathname;
+        if (window.location.hostname.endsWith('.github.io')) {
+            const match = path.match(/^(\/[^\/]+)/);
+            return (match ? match[1] : '') + '/';
+        }
+        return '/';
+    },
+
     logout() {
         localStorage.removeItem(this.SESSION_KEY);
-        window.location.href = '/';
+        window.location.href = this.getBaseUrl();
     },
 
     isLoggedIn() {
@@ -207,7 +216,7 @@ const TJAuth = {
                         ? 'Registrasi berhasil ke database InfinityFree! Mengalihkan...'
                         : 'Registrasi berhasil! Mengalihkan...';
                     TJAuth.showNotification(msg, 'success');
-                    setTimeout(() => { window.location.href = '/'; }, 1200);
+                    setTimeout(() => { window.location.href = TJAuth.getBaseUrl(); }, 1200);
                 } else {
                     TJAuth.showNotification(result.message, 'error');
                     if (submitBtn) {
@@ -248,7 +257,7 @@ const TJAuth = {
                 const result = await TJAuth.login(email, password);
                 if (result.success) {
                     TJAuth.showNotification('Login berhasil! Selamat datang, ' + result.user.name, 'success');
-                    setTimeout(() => { window.location.href = '/'; }, 1200);
+                    setTimeout(() => { window.location.href = TJAuth.getBaseUrl(); }, 1200);
                 } else {
                     TJAuth.showNotification(result.message, 'error');
                     if (submitBtn) {
@@ -294,7 +303,7 @@ const TJAuth = {
                         <span class="navbar-user-role">${session.role === 'penyedia' ? 'Penyedia Jasa' : 'Pelanggan'}</span>
                     </div>
                     <div class="navbar-user-divider"></div>
-                    <a href="/" class="navbar-user-item"><i class="fa-solid fa-home"></i> Beranda</a>
+                    <a href="${TJAuth.getBaseUrl()}" class="navbar-user-item"><i class="fa-solid fa-home"></i> Beranda</a>
                     <button type="button" class="navbar-user-item navbar-user-logout" onclick="TJAuth.logout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
                 </div>
             `;
@@ -302,7 +311,7 @@ const TJAuth = {
         }
 
         // Update mobile nav login link
-        const mobileLogin = document.querySelector('.mobile-nav-item[href="/login"]');
+        const mobileLogin = document.querySelector('.mobile-nav-item[href*="/login"], .mobile-nav-item[href*="login"]');
         if (mobileLogin) {
             mobileLogin.outerHTML = `<a href="javascript:void(0)" class="mobile-nav-item" onclick="TJAuth.logout()">
                 <i class="fa-solid fa-right-from-bracket"></i>
