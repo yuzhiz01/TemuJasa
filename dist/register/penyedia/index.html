@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Penyedia Jasa — TemuJasa</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/temujasa.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body class="auth-body">
+    <div class="auth-shell">
+    <div class="auth-card auth-card-register">
+        <div class="auth-brand">
+            <div class="logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+            <span>TemuJasa</span>
+        </div>
+
+        <div class="auth-header">
+            <h2 class="auth-title">Daftar sebagai Penyedia Jasa</h2>
+            <p class="auth-subtitle">Buat akun untuk menampilkan layanan Anda</p>
+        </div>
+
+        
+        <form method="POST" action="http://localhost/register" class="auth-form">
+            <input type="hidden" name="_token" value="C3p11LSXg7NP3tFKSoNXhrxsk635ys48NaVA4fi9" autocomplete="off">            <input type="hidden" name="role" value="penyedia">
+
+            <div class="auth-form-group">
+                <label for="name">Nama Lengkap</label>
+                <input id="name" type="text" name="name" class="auth-input " value="" placeholder="Masukkan nama lengkap" required>
+                            </div>
+
+            <div class="auth-form-group">
+                <label for="email">Email</label>
+                <input id="email" type="email" name="email" class="auth-input " value="" placeholder="nama@email.com" required>
+                            </div>
+
+            <div class="auth-form-group">
+                <label for="password">Password</label>
+                <div class="auth-input-wrap">
+                    <input id="password" type="password" name="password" class="auth-input " placeholder="Minimal 6 karakter" required>
+                    <button class="btn-toggle-pw" type="button" aria-label="Lihat password" onclick="TJDash.togglePassword(this)">
+                        <i class="fa-regular fa-eye-slash"></i>
+                    </button>
+                </div>
+                            </div>
+
+            <div class="auth-form-group">
+                <label for="password_confirmation">Konfirmasi Password</label>
+                <div class="auth-input-wrap">
+                    <input id="password_confirmation" type="password" name="password_confirmation" class="auth-input" placeholder="Ulangi password" required>
+                    <button class="btn-toggle-pw" type="button" aria-label="Lihat password" onclick="TJDash.togglePassword(this)">
+                        <i class="fa-regular fa-eye-slash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-auth-submit">Daftar sebagai Penyedia Jasa</button>
+        </form>
+
+        <div class="auth-footer-text">
+            Sudah punya akun? <a href="http://localhost/login">Masuk di sini</a>
+        </div>
+    </div>
+</div>
+    <script src="/js/dashboard.js" defer></script>
+</body>
+</html>

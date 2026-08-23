@@ -1,0 +1,32 @@
+{
+  "resources/css/app.css": {
+    "file": "assets/app-CR4DH_mD.css",
+    "src": "resources/css/app.css",
+    "isEntry": true,
+    "name": "app",
+    "names": [
+      "app.css"
+    ]
+  },
+  "resources/css/temujasa.css": {
+    "file": "assets/temujasa-DbZwgFqp.css",
+    "src": "resources/css/temujasa.css",
+    "isEntry": true,
+    "name": "temujasa",
+    "names": [
+      "temujasa.css"
+    ]
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-DUr89oQr.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/temujasa.js": {
+    "file": "assets/temujasa-EhDU6BWz.js",
+    "name": "temujasa",
+    "src": "resources/js/temujasa.js",
+    "isEntry": true
+  }
+}

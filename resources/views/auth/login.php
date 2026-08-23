@@ -1,0 +1,113 @@
+<?php $__sections['title'] = 'Login'; ?>
+
+<?php ob_start(); ?>
+<div class="auth-shell">
+    <div class="auth-card auth-card-login">
+        <div class="auth-brand">
+            <div class="logo-icon">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+            <span>TemuJasa</span>
+        </div>
+
+        <div class="auth-header">
+            <h2 class="auth-title">Selamat Datang</h2>
+            <p class="auth-subtitle">Masuk ke akun TemuJasa Anda</p>
+        </div>
+
+        <?php if($errors->any()): ?>
+            <div class="auth-alert" role="alert">
+                <?php echo e($errors->first()); ?>
+
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" action="<?php echo e(route('login.process')); ?>" class="auth-form">
+            <?php echo csrf_field(); ?>
+
+            <div class="auth-form-group">
+                <label for="email">Email</label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    class="auth-input <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                    placeholder="nama@email.com"
+                    value="<?php echo e(old('email')); ?>"
+                    required
+                    autofocus
+                >
+                <?php $__errorArgs = ['email'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="auth-error"><?php echo e($message); ?></span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="auth-form-group">
+                <label for="password">Password</label>
+                <div class="auth-input-wrap">
+                    <input
+                        id="password"
+                        type="password"
+                        name="password"
+                        class="auth-input <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?> is-invalid <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>"
+                        placeholder="Masukkan password"
+                        required
+                    >
+                    <button class="btn-toggle-pw" type="button" aria-label="Lihat password" onclick="TJDash.togglePassword(this)">
+                        <i class="fa-regular fa-eye-slash"></i>
+                    </button>
+                </div>
+                <?php $__errorArgs = ['password'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>
+                    <span class="auth-error"><?php echo e($message); ?></span>
+                <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+            </div>
+
+            <div class="auth-options">
+                <label class="auth-check">
+                    <input type="checkbox" name="remember" value="1" <?php echo e(old('remember') ? 'checked' : ''); ?>>
+                    <span>Ingat saya</span>
+                </label>
+                <a href="#">Lupa password?</a>
+            </div>
+
+            <button type="submit" class="btn-auth-submit">Masuk</button>
+        </form>
+
+        <div class="auth-divider"><span>atau</span></div>
+
+        <div class="auth-footer-text">
+            Belum punya akun?
+            <a href="<?php echo e(route('register')); ?>">Daftar sekarang</a>
+        </div>
+    </div>
+</div>
+<?php $__sections['content'] = ob_get_clean(); ?>
+<?php require __DIR__ . '/../layouts/auth.php'; ?>
