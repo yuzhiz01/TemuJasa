@@ -6,7 +6,7 @@ const TJAuth = {
 
     // Default API URL pointing directly to InfinityFree Database API
     getApiUrl() {
-        return localStorage.getItem(this.API_URL_KEY) || 'http://temujasa.great-site.net/api';
+        return localStorage.getItem(this.API_URL_KEY) || 'https://temujasa.great-site.net/api';
     },
 
     setApiUrl(url) {
