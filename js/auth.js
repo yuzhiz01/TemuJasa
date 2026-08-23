@@ -4,9 +4,9 @@ const TJAuth = {
     SESSION_KEY: 'temujasa_session',
     API_URL_KEY: 'temujasa_api_url',
 
-    // Default API URL (dapat diset lewat localStorage atau form setting)
+    // Default API URL pointing directly to InfinityFree Database API
     getApiUrl() {
-        return localStorage.getItem(this.API_URL_KEY) || '/api';
+        return localStorage.getItem(this.API_URL_KEY) || 'http://temujasa.great-site.net/api';
     },
 
     setApiUrl(url) {
