@@ -10,8 +10,6 @@
         { "src": "/storage/(.*)", "dest": "/api/index.php" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
-    "public": true,
-    "buildCommand": "composer install --optimize-autoloader --no-dev && npm ci && vite build",
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "production",
