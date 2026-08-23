@@ -1,15 +1,603 @@
-﻿<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="refresh" content="0;url='/login'" />
-
-        <title>Redirecting to /login</title>
-        <link rel="stylesheet" href="../../css/auth.css">
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cari Jasa & Layanan UMKM — TemuJasa</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/temujasa.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+    <style>
+        .search-page-header {
+            background: linear-gradient(135deg, #3d1b94 0%, #683ad6 100%);
+            color: #fff;
+            padding: 36px 20px 48px;
+            text-align: center;
+        }
+        .search-page-header h1 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .search-page-header p {
+            font-size: 14px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .search-box-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 20px;
+            max-width: 1000px;
+            margin: -28px auto 30px;
+            position: relative;
+            z-index: 10;
+        }
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 12px;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .search-input-group {
+            position: relative;
+        }
+        .search-input-group i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+        .search-input-group input {
+            width: 100%;
+            padding: 12px 14px 12px 40px;
+            border: 1.5px solid #e2e0e8;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .search-input-group input:focus {
+            border-color: #5d2fc7;
+        }
+        .filter-select {
+            padding: 12px 14px;
+            border: 1.5px solid #e2e0e8;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            background: #fff;
+            width: 100%;
+        }
+        .category-pills {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 12px 0 6px;
+            margin-top: 12px;
+            border-top: 1px solid #f0eef4;
+        }
+        .cat-pill {
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: #f4f2f8;
+            color: #555;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            white-space: nowrap;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .cat-pill:hover, .cat-pill.active {
+            background: #4f2aa8;
+            color: #fff;
+        }
+        .services-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: 0 auto 50px;
+            padding: 0 20px;
+        }
+        .service-item-card {
+            background: #fff;
+            border: 1px solid #eae8f0;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+        .service-item-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(79, 42, 168, 0.12);
+            border-color: #d1c4f5;
+        }
+        .service-card-banner {
+            height: 120px;
+            background: linear-gradient(135deg, #ece8fa, #dfd7f7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4f2aa8;
+            font-size: 40px;
+        }
+        .service-card-content {
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .service-badge {
+            align-self: flex-start;
+            background: #f0ebfd;
+            color: #4f2aa8;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+        .service-card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e192c;
+            margin-bottom: 6px;
+        }
+        .service-provider-info {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .service-price-tag {
+            font-size: 17px;
+            font-weight: 800;
+            color: #4f2aa8;
+            margin-top: auto;
+            margin-bottom: 14px;
+        }
+        .service-card-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-order-service {
+            flex: 1;
+            background: #4f2aa8;
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .btn-order-service:hover {
+            background: #3c1e84;
+        }
+        .btn-view-prov {
+            padding: 10px 14px;
+            background: #f4f2f8;
+            color: #4f2aa8;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .empty-results {
+            text-align: center;
+            padding: 60px 20px;
+            grid-column: 1 / -1;
+            color: #666;
+        }
+        .empty-results i {
+            font-size: 54px;
+            color: #d1c4f5;
+            margin-bottom: 16px;
+        }
+        /* Modal Pesan */
+        .order-modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .order-modal-backdrop.show {
+            display: flex;
+        }
+        .order-modal-box {
+            background: #fff;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: modalFadeIn 0.3s ease;
+        }
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .order-modal-head {
+            background: #4f2aa8;
+            color: #fff;
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .order-modal-head h3 { margin: 0; font-size: 18px; }
+        .order-modal-close {
+            background: none; border: none; color: #fff; font-size: 20px; cursor: pointer;
+        }
+        .order-modal-body {
+            padding: 24px;
+        }
+    </style>
 </head>
-    <body>
-        Redirecting to <a href="../../login/">/login</a>.
-        <script src="../../js/auth.js" defer></script>
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+    <header class="navbar" id="mainNavbar">
+        <div class="navbar-container">
+            <a href="../../" class="logo" title="TemuJasa Beranda">
+                <div class="logo-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                </div>
+                <span>TemuJasa</span>
+            </a>
+
+            <div class="navbar-search">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="navSearchInput" placeholder="Cari layanan jasa di sini..." onkeyup="if(event.key==='Enter') document.getElementById('searchQuery').value=this.value, filterServices();">
+            </div>
+
+            <div class="navbar-actions">
+                <a href="../../jasa/cari/" class="nav-link active"><i class="fa-solid fa-compass"></i> Jelajahi Jasa</a>
+                <a href="../../login/" class="btn-header-auth btn-header-login">Login</a>
+                <a href="../../register/" class="btn-header-auth btn-header-register">Daftar</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HEADER SECTION -->
+    <div class="search-page-header">
+        <h1>Temukan Jasa & Layanan Terbaik</h1>
+        <p>Cari ribuan penyedia jasa profesional terpercaya di sekitar lokasi Anda</p>
+    </div>
+
+    <!-- SEARCH & FILTER BOX -->
+    <div style="padding: 0 20px;">
+        <div class="search-box-card">
+            <div class="filter-grid">
+                <div class="search-input-group">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchQuery" placeholder="Ketik nama jasa, kata kunci, atau penyedia..." oninput="filterServices()">
+                </div>
+                <select id="filterCategory" class="filter-select" onchange="filterServices()">
+                    <option value="">Semua Kategori</option>
+                    <option value="AC & Pendingin">AC & Pendingin</option>
+                    <option value="Acara & Event">Acara & Event</option>
+                    <option value="Elektronik">Elektronik</option>
+                    <option value="Kebersihan">Kebersihan</option>
+                    <option value="Kecantikan & Kesehatan">Kecantikan & Kesehatan</option>
+                    <option value="Otomotif">Otomotif</option>
+                    <option value="Pendidikan & Les">Pendidikan & Les</option>
+                    <option value="Renovasi & Perbaikan">Renovasi & Perbaikan</option>
+                    <option value="Rumah Tangga">Rumah Tangga</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+                <select id="filterSort" class="filter-select" onchange="filterServices()">
+                    <option value="relevan">Urutkan: Relevan</option>
+                    <option value="harga-rendah">Harga Terendah</option>
+                    <option value="harga-tinggi">Harga Tertinggi</option>
+                </select>
+                <button type="button" class="btn-primary" onclick="filterServices()" style="padding:12px 20px;border-radius:10px;font-weight:600;">
+                    <i class="fa-solid fa-filter"></i> Terapkan
+                </button>
+            </div>
+
+            <!-- CATEGORY PILLS -->
+            <div class="category-pills" id="categoryPills">
+                <span class="cat-pill active" onclick="selectCatPill(this, '')">Semua</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'AC & Pendingin')"><i class="fa-solid fa-snowflake"></i> AC & Pendingin</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'Elektronik')"><i class="fa-solid fa-bolt"></i> Elektronik</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'Kebersihan')"><i class="fa-solid fa-broom"></i> Kebersihan</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'Otomotif')"><i class="fa-solid fa-car"></i> Otomotif</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'Renovasi & Perbaikan')"><i class="fa-solid fa-hammer"></i> Renovasi</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'Rumah Tangga')"><i class="fa-solid fa-house"></i> Rumah Tangga</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'Pendidikan & Les')"><i class="fa-solid fa-book"></i> Les & Pendidikan</span>
+                <span class="cat-pill" onclick="selectCatPill(this, 'Kecantikan & Kesehatan')"><i class="fa-solid fa-spa"></i> Kecantikan</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SERVICES RESULTS GRID -->
+    <div class="services-results-grid" id="servicesGrid">
+        <!-- Rendered via JS -->
+    </div>
+
+    <!-- MODAL PESAN JASA -->
+    <div class="order-modal-backdrop" id="orderModal">
+        <div class="order-modal-box">
+            <div class="order-modal-head">
+                <h3 id="modalServiceTitle">Pesan Jasa</h3>
+                <button type="button" class="order-modal-close" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <div class="order-modal-body">
+                <div style="background:#f6f4fa;padding:12px 16px;border-radius:12px;margin-bottom:18px;">
+                    <div style="font-size:12px;color:#666;">Penyedia Jasa: <strong id="modalProviderName" style="color:#111;">-</strong></div>
+                    <div style="font-size:16px;font-weight:800;color:#4f2aa8;margin-top:4px;" id="modalServicePrice">Rp 0</div>
+                </div>
+                <form id="orderForm" onsubmit="submitBooking(event)">
+                    <div class="auth-form-group">
+                        <label for="orderAddress">Alamat Lengkap Pengerjaan</label>
+                        <input type="text" id="orderAddress" class="auth-input" placeholder="Jl. Contoh No. 123, RT/RW, Kota" required>
+                    </div>
+                    <div class="auth-form-group">
+                        <label for="orderDate">Jadwal Tanggal & Jam Pengerjaan</label>
+                        <input type="datetime-local" id="orderDate" class="auth-input" required>
+                    </div>
+                    <div class="auth-form-group">
+                        <label for="orderNotes">Catatan Tambahan untuk Penyedia Jasa</label>
+                        <textarea id="orderNotes" class="auth-input" style="height:80px;resize:vertical;" placeholder="Jelaskan detail kendala atau permintaan khusus..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-auth-submit" style="margin-top:10px;">
+                        <i class="fa-solid fa-check-circle"></i> Konfirmasi & Buat Pesanan
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM MOBILE NAVIGATION -->
+    <nav class="mobile-nav">
+        <a href="../../" class="mobile-nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="../../jasa/cari/" class="mobile-nav-item active">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Cari Jasa</span>
+        </a>
+        <a href="../../pelanggan/dashboard/" class="mobile-nav-item">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Pesanan</span>
+        </a>
+        <a href="../../login/" class="mobile-nav-item" id="mobileAuthLink">
+            <i class="fa-solid fa-user"></i>
+            <span>Akun</span>
+        </a>
+    </nav>
+
+    <script src="../../js/temujasa.js" defer></script>
+    <script src="../../js/auth.js" defer></script>
+    <script>
+        // Sample & Dynamic Services Database
+        const defaultServices = [
+            { id: 1, title: 'Service Cuci & Tambah Freon AC', category: 'AC & Pendingin', provider: 'Fauzi Qurniawan', providerId: 4, price: 75000, icon: 'fa-snowflake', location: 'Jakarta Selatan' },
+            { id: 2, title: 'Perbaikan Instalasi Listrik Rumah', category: 'Elektronik', provider: 'Renaldy fransius', providerId: 2, price: 120000, icon: 'fa-bolt', location: 'Tangerang' },
+            { id: 3, title: 'Pembersihan Rumah / Deep Cleaning', category: 'Kebersihan', provider: 'Fauzi Qurniawan', providerId: 4, price: 150000, icon: 'fa-broom', location: 'Jakarta Pusat' },
+            { id: 4, title: 'Service Tune Up & Ganti Oli Motor', category: 'Otomotif', provider: 'Renaldy fransius', providerId: 2, price: 90000, icon: 'fa-car', location: 'Jakarta Barat' },
+            { id: 5, title: 'Tukang Cat & Renovasi Dinding', category: 'Renovasi & Perbaikan', provider: 'Renaldy fransius', providerId: 2, price: 250000, icon: 'fa-hammer', location: 'Bekasi' },
+            { id: 6, title: 'Sedot WC & Saluran Mampet', category: 'Rumah Tangga', provider: 'Fauzi Qurniawan', providerId: 4, price: 300000, icon: 'fa-toilet', location: 'Depok' },
+            { id: 7, title: 'Les Privat Matematika & Sains SD-SMP', category: 'Pendidikan & Les', provider: 'Fauzi Qurniawan', providerId: 4, price: 80000, icon: 'fa-book-open', location: 'Jakarta Selatan' },
+            { id: 8, title: 'Potong Rambut & Grooming Panggilan', category: 'Kecantikan & Kesehatan', provider: 'Renaldy fransius', providerId: 2, price: 50000, icon: 'fa-scissors', location: 'Jakarta Timur' }
+        ];
+
+        let currentActiveService = null;
+
+        function loadServicesFromStorage() {
+            try {
+                const customServices = JSON.parse(localStorage.getItem('temujasa_custom_services')) || [];
+                return [...customServices, ...defaultServices];
+            } catch (e) {
+                return defaultServices;
+            }
+        }
+
+        function filterServices() {
+            const query = (document.getElementById('searchQuery').value || '').toLowerCase().trim();
+            const category = document.getElementById('filterCategory').value;
+            const sort = document.getElementById('filterSort').value;
+
+            const allServices = loadServicesFromStorage();
+            let filtered = allServices.filter(s => {
+                const matchQuery = !query || s.title.toLowerCase().includes(query) || s.category.toLowerCase().includes(query) || s.provider.toLowerCase().includes(query);
+                const matchCategory = !category || s.category.toLowerCase() === category.toLowerCase();
+                return matchQuery && matchCategory;
+            });
+
+            if (sort === 'harga-rendah') {
+                filtered.sort((a, b) => a.price - b.price);
+            } else if (sort === 'harga-tinggi') {
+                filtered.sort((a, b) => b.price - a.price);
+            }
+
+            renderServices(filtered);
+        }
+
+        function selectCatPill(el, catName) {
+            document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('filterCategory').value = catName;
+            filterServices();
+        }
+
+        function formatRupiah(num) {
+            return 'Rp ' + Number(num).toLocaleString('id-ID');
+        }
+
+        function renderServices(list) {
+            const container = document.getElementById('servicesGrid');
+            if (!container) return;
+
+            if (list.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-results">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <h3>Layanan Tidak Ditemukan</h3>
+                        <p>Coba kata kunci pencarian lain atau pilih kategori yang berbeda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = list.map(item => `
+                <div class="service-item-card">
+                    <div class="service-card-banner">
+                        <i class="fa-solid ${item.icon || 'fa-briefcase'}"></i>
+                    </div>
+                    <div class="service-card-content">
+                        <span class="service-badge">${item.category}</span>
+                        <h3 class="service-card-title">${item.title}</h3>
+                        <div class="service-provider-info">
+                            <i class="fa-solid fa-user-check" style="color:#4f2aa8;"></i>
+                            <span>${item.provider}</span>
+                            <span style="color:#bbb;">&bull;</span>
+                            <i class="fa-solid fa-location-dot" style="color:#e24a4a;"></i>
+                            <span>${item.location || 'Terdekat'}</span>
+                        </div>
+                        <div class="service-price-tag">${formatRupiah(item.price)}</div>
+                        <div class="service-card-actions">
+                            <button type="button" class="btn-order-service" onclick="openOrderModal(${item.id})">
+                                <i class="fa-solid fa-bag-shopping"></i> Pesan Sekarang
+                            </button>
+                            <a href="../../penyedia-profil/${item.providerId}/" class="btn-view-prov" title="Lihat Profil">
+                                <i class="fa-solid fa-user"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openOrderModal(serviceId) {
+            const allServices = loadServicesFromStorage();
+            const service = allServices.find(s => s.id === serviceId);
+            if (!service) return;
+
+            currentActiveService = service;
+            document.getElementById('modalServiceTitle').innerText = 'Pesan: ' + service.title;
+            document.getElementById('modalProviderName').innerText = service.provider;
+            document.getElementById('modalServicePrice').innerText = formatRupiah(service.price);
+
+            // Set default date to tomorrow 09:00
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(9, 0, 0, 0);
+            const dateInput = document.getElementById('orderDate');
+            if (dateInput) {
+                dateInput.value = tomorrow.toISOString().slice(0, 16);
+            }
+
+            document.getElementById('orderModal').classList.add('show');
+        }
+
+        function closeOrderModal() {
+            document.getElementById('orderModal').classList.remove('show');
+            currentActiveService = null;
+        }
+
+        function submitBooking(e) {
+            e.preventDefault();
+            const session = TJAuth.getSession();
+            if (!session) {
+                TJAuth.showNotification('Silakan login terlebih dahulu untuk membuat pesanan.', 'error');
+                setTimeout(() => {
+                    window.location.href = '../../login/';
+                }, 1200);
+                return;
+            }
+
+            if (!currentActiveService) return;
+
+            const address = document.getElementById('orderAddress').value.trim();
+            const date = document.getElementById('orderDate').value;
+            const notes = document.getElementById('orderNotes').value.trim();
+
+            const order = {
+                id: 'ORD-' + Date.now(),
+                serviceId: currentActiveService.id,
+                serviceName: currentActiveService.title,
+                category: currentActiveService.category,
+                price: currentActiveService.price,
+                providerName: currentActiveService.provider,
+                providerId: currentActiveService.providerId,
+                customerName: session.name,
+                customerEmail: session.email,
+                address: address,
+                orderDate: date,
+                notes: notes,
+                status: 'Menunggu Konfirmasi',
+                created_at: new Date().toISOString()
+            };
+
+            // Save to localStorage orders
+            const orders = JSON.parse(localStorage.getItem('temujasa_orders')) || [];
+            orders.unshift(order);
+            localStorage.setItem('temujasa_orders', JSON.stringify(orders));
+
+            closeOrderModal();
+            TJAuth.showNotification('Pesanan berhasil dibuat! Mengalihkan ke Pesanan Saya...', 'success');
+            setTimeout(() => {
+                window.location.href = '../../pelanggan/dashboard/';
+            }, 1200);
+        }
+
+        // Parse query params on load
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const q = params.get('q') || '';
+            const kat = params.get('kategori') || params.get('category') || '';
+
+            if (q) document.getElementById('searchQuery').value = q;
+            if (kat) {
+                document.getElementById('filterCategory').value = kat;
+                document.querySelectorAll('.cat-pill').forEach(p => {
+                    if (p.innerText.toLowerCase().includes(kat.toLowerCase())) {
+                        p.classList.add('active');
+                    } else {
+                        p.classList.remove('active');
+                    }
+                });
+            }
+
+            filterServices();
+        });
+    </script>
 </body>
 </html>
-

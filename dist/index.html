@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 
 <head>
@@ -18,8 +18,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="./css/temujasa.css">
-    <script src="./js/temujasa.js" defer></script>
     <link rel="stylesheet" href="./css/auth.css">
+    <script src="./js/temujasa.js" defer></script>
 </head>
 
 <body>
@@ -43,7 +43,7 @@
                     type="text"
                     id="navSearchInput"
                     placeholder="Cari produk, toko, atau jasa lokal..."
-                    value=""
+                    onkeyup="if(event.key==='Enter') searchTemuJasa(this.value);"
                 >
                 <button type="button" class="nav-search-clear" id="navSearchClear" style="display: none;" title="Hapus pencarian">
                     <i class="fa-solid fa-xmark"></i>
@@ -52,7 +52,6 @@
 
             <!-- NAVBAR RIGHT MENU -->
             <div class="navbar-right">
-
                 <!-- LOCATION SELECTOR -->
                 <button type="button" class="location-btn" id="locationBtn" onclick="TemuJasa.openLocationModal()" title="Ubah lokasi">
                     <i class="fa-solid fa-location-dot"></i>
@@ -60,20 +59,12 @@
                     <i class="fa-solid fa-chevron-down"></i>
                 </button>
 
-                <!-- NOTIFICATION: pesan chat nyata dari database -->
-                
-                <!-- SHOPPING CART -->
-                <button type="button" class="icon-button cart-toggle-btn" id="cartToggleBtn" onclick="TemuJasa.toggleCart()" title="Keranjang Belanja">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span class="badge-count" id="cartBadgeCount">0</span>
-                </button>
+                <a href="./jasa/cari/" class="nav-link" style="font-weight:600;color:#4f2aa8;display:flex;align-items:center;gap:6px;">
+                    <i class="fa-solid fa-compass"></i> Cari Jasa
+                </a>
 
-                                    <a href="./login/" class="btn-header-auth btn-header-login">Login</a>
-                    <a href="./register/" class="btn-header-auth btn-header-register">Daftar</a>
-                
-                
-                <!-- USER PROFILE -->
-                
+                <a href="./login/" class="btn-header-auth btn-header-login">Login</a>
+                <a href="./register/" class="btn-header-auth btn-header-register">Daftar</a>
             </div>
         </div>
     </header>
@@ -82,173 +73,136 @@
     <!-- ================= MAIN CONTENT ================= -->
     <main class="main-content">
         
-<section class="hero-section">
-    <div class="hero-container">
-        <div class="hero-content">
-            <span class="hero-small-title">TEMUJASA</span>
-            <h1>
-                Temukan produk<br>
-                <span>& jasa lokal</span><br>
-                terdekat dari Anda
-            </h1>
-            <p>Dukung UMKM lokal dan dapatkan layanan terbaik di sekitar Anda.</p>
+        <section class="hero-section">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <span class="hero-small-title">TEMUJASA</span>
+                    <h1>
+                        Temukan produk<br>
+                        <span>& jasa lokal</span><br>
+                        terdekat dari Anda
+                    </h1>
+                    <p>Dukung UMKM lokal dan dapatkan layanan terbaik di sekitar Anda.</p>
 
-            <div class="main-search-box">
-                <div class="search-input">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="mainSearch" placeholder="Cari apa hari ini?">
+                    <div class="main-search-box">
+                        <div class="search-input">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="mainSearch" placeholder="Cari layanan apa hari ini?" onkeyup="if(event.key==='Enter') searchTemuJasa(this.value);">
+                        </div>
+                        <div class="search-location" onclick="TemuJasa.openLocationModal()">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span id="heroLocationLabel">Lokasi saya</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </div>
+                        <button type="button" onclick="searchTemuJasa()">Cari</button>
+                    </div>
                 </div>
-                <div class="search-location" onclick="TemuJasa.openLocationModal()">
-                    <i class="fa-solid fa-location-dot"></i>
-                    <span id="heroLocationLabel">Lokasi saya</span>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
-                <button type="button" onclick="searchTemuJasa()">Cari</button>
-            </div>
-        </div>
 
-        <div class="hero-illustration">
-            <div class="cloud cloud-one"></div>
-            <div class="cloud cloud-two"></div>
-            <div class="location-pin"><i class="fa-solid fa-location-dot"></i></div>
-            <div class="shop">
-                <div class="shop-roof"><span></span><span></span><span></span><span></span><span></span></div>
-                <div class="shop-body">
-                    <div class="shop-sign">TOKO</div>
-                    <div class="shop-window"><div class="window-product"></div><div class="window-product"></div><div class="window-product"></div></div>
+                <div class="hero-illustration">
+                    <div class="cloud cloud-one"></div>
+                    <div class="cloud cloud-two"></div>
+                    <div class="location-pin"><i class="fa-solid fa-location-dot"></i></div>
+                    <div class="shop">
+                        <div class="shop-roof"><span></span><span></span><span></span><span></span><span></span></div>
+                        <div class="shop-body">
+                            <div class="shop-sign">TOKO</div>
+                            <div class="shop-window"><div class="window-product"></div><div class="window-product"></div><div class="window-product"></div></div>
+                        </div>
+                    </div>
+                    <div class="person person-left"><div class="head"></div><div class="body"></div><div class="leg leg-one"></div><div class="leg leg-two"></div></div>
+                    <div class="person person-right"><div class="head"></div><div class="body"></div><div class="leg leg-one"></div><div class="leg leg-two"></div></div>
                 </div>
             </div>
-            <div class="person person-left"><div class="head"></div><div class="body"></div><div class="leg leg-one"></div><div class="leg leg-two"></div></div>
-            <div class="person person-right"><div class="head"></div><div class="body"></div><div class="leg leg-one"></div><div class="leg leg-two"></div></div>
-        </div>
-    </div>
-</section>
+        </section>
 
-<section class="section-container">
-    <div class="section-heading">
-        <h2>Kategori</h2>
-                <a href="./login/">Lihat semua</a>
+        <!-- ================= KATEGORI JASA ================= -->
+        <section class="section-container">
+            <div class="section-heading">
+                <h2>Kategori Jasa Populer</h2>
+                <a href="./jasa/cari/">Lihat semua</a>
             </div>
-        <div class="category-grid">
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>AC &amp; Pendingin</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Acara &amp; Event</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Elektronik</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Kebersihan</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Kecantikan &amp; Kesehatan</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Lainnya</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Otomotif</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Pendidikan &amp; Les</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Renovasi &amp; Perbaikan</span>
-        </a>
-                <a href="./login/" class="category-card">
-            <div class="category-icon"><i class="fa-solid fa-tag"></i></div>
-            <span>Rumah Tangga</span>
-        </a>
+            <div class="category-grid">
+                <a href="./jasa/cari/?kategori=AC+%26+Pendingin" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-snowflake"></i></div>
+                    <span>AC &amp; Pendingin</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Acara+%26+Event" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <span>Acara &amp; Event</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Elektronik" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-bolt"></i></div>
+                    <span>Elektronik</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Kebersihan" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-broom"></i></div>
+                    <span>Kebersihan</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Kecantikan+%26+Kesehatan" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-spa"></i></div>
+                    <span>Kecantikan &amp; Kesehatan</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Lainnya" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-ellipsis"></i></div>
+                    <span>Lainnya</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Otomotif" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-car"></i></div>
+                    <span>Otomotif</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Pendidikan+%26+Les" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <span>Pendidikan &amp; Les</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Renovasi+%26+Perbaikan" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-hammer"></i></div>
+                    <span>Renovasi &amp; Perbaikan</span>
+                </a>
+                <a href="./jasa/cari/?kategori=Rumah+Tangga" class="category-card">
+                    <div class="category-icon"><i class="fa-solid fa-house"></i></div>
+                    <span>Rumah Tangga</span>
+                </a>
             </div>
-    </section>
+        </section>
 
-<section class="section-container recommendation-section">
-    <div class="section-heading">
-        <div>
-            <h2>Penyedia Jasa</h2>
-            <p>Penyedia jasa terdaftar di TemuJasa</p>
-        </div>
-                <a href="./login/">Lihat semua</a>
+        <!-- ================= PENYEDIA JASA TERBAIK ================= -->
+        <section class="section-container recommendation-section">
+            <div class="section-heading">
+                <div>
+                    <h2>Penyedia Jasa Terpercaya</h2>
+                    <p>Penyedia jasa terdaftar di TemuJasa</p>
+                </div>
+                <a href="./jasa/cari/">Lihat semua</a>
             </div>
-        <div class="business-grid">
+            <div class="business-grid">
                 <a class="business-card" href="./penyedia-profil/4/">
-            <div class="business-image" style="background:#f0ecff;display:flex;align-items:center;justify-content:center;min-height:120px;">
-                <i class="fa-solid fa-user-tie" style="font-size:48px;color:#4f2aa8;"></i>
-            </div>
-            <div class="business-info">
-                <h3>Fauzi Qurniawan</h3>
-                <p>Penyedia Jasa</p>
-                <div class="business-meta">
-                    <span><i class="fa-solid fa-bag-shopping"></i> 1 pesanan</span>
-                    <span><i class="fa-solid fa-eye"></i> Lihat profil</span>
-                </div>
-            </div>
-        </a>
+                    <div class="business-image" style="background:#f0ecff;display:flex;align-items:center;justify-content:center;min-height:120px;">
+                        <i class="fa-solid fa-user-tie" style="font-size:48px;color:#4f2aa8;"></i>
+                    </div>
+                    <div class="business-info">
+                        <h3>Fauzi Qurniawan</h3>
+                        <p>Penyedia Jasa</p>
+                        <div class="business-meta">
+                            <span><i class="fa-solid fa-bag-shopping"></i> 1 pesanan</span>
+                            <span><i class="fa-solid fa-eye"></i> Lihat profil</span>
+                        </div>
+                    </div>
+                </a>
                 <a class="business-card" href="./penyedia-profil/2/">
-            <div class="business-image" style="background:#f0ecff;display:flex;align-items:center;justify-content:center;min-height:120px;">
-                <i class="fa-solid fa-user-tie" style="font-size:48px;color:#4f2aa8;"></i>
+                    <div class="business-image" style="background:#f0ecff;display:flex;align-items:center;justify-content:center;min-height:120px;">
+                        <i class="fa-solid fa-user-tie" style="font-size:48px;color:#4f2aa8;"></i>
+                    </div>
+                    <div class="business-info">
+                        <h3>Renaldy fransius</h3>
+                        <p>Penyedia Jasa</p>
+                        <div class="business-meta">
+                            <span><i class="fa-solid fa-bag-shopping"></i> 0 pesanan</span>
+                            <span><i class="fa-solid fa-eye"></i> Lihat profil</span>
+                        </div>
+                    </div>
+                </a>
             </div>
-            <div class="business-info">
-                <h3>Renaldy fransius</h3>
-                <p>Penyedia Jasa</p>
-                <div class="business-meta">
-                    <span><i class="fa-solid fa-bag-shopping"></i> 0 pesanan</span>
-                    <span><i class="fa-solid fa-eye"></i> Lihat profil</span>
-                </div>
-            </div>
-        </a>
-            </div>
-    </section>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    if (!('geolocation' in navigator)) return;
-    if (sessionStorage.getItem('geoAsked')) return;
-
-    const simpanKeSession = (lat, lng) => {
-        localStorage.setItem('geo.lat', lat);
-        localStorage.setItem('geo.lng', lng);
-        fetch('//simpan-lokasi', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({ lat, lng }),
-        }).catch(() => {});
-    };
-
-    const askPermission = () => {
-        sessionStorage.setItem('geoAsked', '1');
-        navigator.geolocation.getCurrentPosition((pos) => {
-            simpanKeSession(pos.coords.latitude.toFixed(7), pos.coords.longitude.toFixed(7));
-        }, () => {
-            /* izin ditolak → pengguna tetap bisa pakai fitur lokasi manual */
-        }, { enableHighAccuracy: true, timeout: 10000 });
-    };
-
-    if (navigator.permissions) {
-        navigator.permissions.query({ name: 'geolocation' }).then((st) => {
-            if (st.state === 'granted' || st.state === 'prompt') askPermission();
-        }).catch(() => {});
-    } else {
-        askPermission();
-    }
-});
-</script>
+        </section>
 
     </main>
 
@@ -282,18 +236,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     <h4 class="footer-title">Jelajahi</h4>
                     <ul class="footer-links">
                         <li><a href="./">Beranda</a></li>
-                                            </ul>
+                        <li><a href="./jasa/cari/">Cari Jasa</a></li>
+                        <li><a href="./login/">Login / Masuk</a></li>
+                        <li><a href="./register/">Daftar Akun</a></li>
+                    </ul>
                 </div>
 
                 <!-- CATEGORIES -->
                 <div class="footer-col">
                     <h4 class="footer-title">Kategori Populer</h4>
                     <ul class="footer-links">
-                        <li><a href="./jasa/cari/">Kuliner & Makanan</a></li>
-                        <li><a href="./jasa/cari/">Jasa Servis & Montir</a></li>
-                        <li><a href="./jasa/cari/">Laundry & Kebersihan</a></li>
-                        <li><a href="./jasa/cari/">Tenaga Harian Lepas</a></li>
-                        <li><a href="./jasa/cari/">Sembako & Kebutuhan</a></li>
+                        <li><a href="./jasa/cari/?kategori=AC+%26+Pendingin">AC &amp; Pendingin</a></li>
+                        <li><a href="./jasa/cari/?kategori=Elektronik">Servis Elektronik</a></li>
+                        <li><a href="./jasa/cari/?kategori=Kebersihan">Kebersihan &amp; Cleaning</a></li>
+                        <li><a href="./jasa/cari/?kategori=Otomotif">Otomotif &amp; Montir</a></li>
+                        <li><a href="./jasa/cari/?kategori=Renovasi+%26+Perbaikan">Renovasi Bangunan</a></li>
                     </ul>
                 </div>
 
@@ -308,15 +265,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     </ul>
                     <div class="footer-badge-mitra">
                         <span>Punya usaha UMKM atau Jasa?</span>
-                                                    <a href="./register/" class="btn-join-mitra">Daftar Jadi Mitra</a>
-                                                                    </div>
+                        <a href="./register/penyedia/" class="btn-join-mitra">Daftar Jadi Mitra</a>
+                    </div>
                 </div>
 
             </div>
 
-            <!-- COPYRIGHT -->
+            <!-- FOOTER BOTTOM -->
             <div class="footer-bottom">
-                <p>&copy; 2026 <strong>TemuJasa</strong>. Seluruh hak cipta dilindungi. Bangga Dukung UMKM Lokal.</p>
+                <p>&copy; 2026 TemuJasa. Hak Cipta Dilindungi.</p>
                 <div class="footer-bottom-links">
                     <a href="#">Syarat & Ketentuan</a>
                     <span>•</span>
@@ -330,240 +287,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     <!-- ================= MOBILE BOTTOM NAVIGATION ================= -->
-    <nav class="mobile-navigation" id="mobileNav">
+    <nav class="mobile-nav" id="mobileNav">
         <a href="./" class="mobile-nav-item active">
             <i class="fa-solid fa-house"></i>
             <span>Beranda</span>
         </a>
-
-                <a href="./login/" class="mobile-nav-item">
-            <i class="fa-solid fa-right-to-bracket"></i>
-            <span>Login</span>
+        <a href="./jasa/cari/" class="mobile-nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Cari Jasa</span>
         </a>
-            </nav>
+        <a href="./pelanggan/dashboard/" class="mobile-nav-item">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Pesanan</span>
+        </a>
+        <a href="./login/" class="mobile-nav-item" id="mobileNavAuth">
+            <i class="fa-solid fa-user"></i>
+            <span>Akun</span>
+        </a>
+    </nav>
 
-
-    <!-- ================= CART DRAWER (OFFCANVAS) ================= -->
-    <div class="cart-overlay" id="cartOverlay" onclick="TemuJasa.closeCart()"></div>
-    <div class="cart-drawer" id="cartDrawer">
-        <div class="cart-drawer-header">
-            <div class="cart-title">
-                <i class="fa-solid fa-cart-shopping"></i>
-                <h3>Keranjang Belanja</h3>
-                <span class="cart-count-badge" id="cartDrawerCount">0 item</span>
-            </div>
-            <button type="button" class="btn-close-drawer" onclick="TemuJasa.closeCart()" title="Tutup Keranjang">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <div class="cart-drawer-body" id="cartDrawerItems">
-            <!-- Rendered dynamically by JavaScript -->
-            <div class="empty-cart-state" id="emptyCartState">
-                <div class="empty-cart-icon">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </div>
-                <h4>Keranjang masih kosong</h4>
-                <p>Yuk cari produk kuliner atau jasa lokal favoritmu sekarang!</p>
-                <a href="./" class="btn-shop-now" onclick="TemuJasa.closeCart()">Mulai Belanja</a>
-            </div>
-        </div>
-
-        <div class="cart-drawer-footer" id="cartDrawerFooter" style="display: none;">
-            <div class="cart-summary-row">
-                <span>Subtotal</span>
-                <strong id="cartSubtotalText">Rp 0</strong>
-            </div>
-            <div class="cart-summary-row">
-                <span>Biaya Layanan</span>
-                <span class="text-free">Gratis</span>
-            </div>
-            <div class="cart-summary-total">
-                <span>Total Pembayaran</span>
-                <h4 id="cartTotalText">Rp 0</h4>
-            </div>
-            <button type="button" class="btn-checkout" onclick="TemuJasa.checkoutCart()">
-                <i class="fa-solid fa-shield-halved"></i>
-                Checkout Pesanan
-            </button>
-        </div>
-    </div>
-
-
-    <!-- ================= LOCATION PICKER MODAL ================= -->
+    <!-- Location Modal -->
     <div class="modal-overlay" id="locationModalOverlay" onclick="TemuJasa.closeLocationModal()"></div>
-    <div class="modal-dialog" id="locationModal">
+    <div class="location-modal" id="locationModal">
         <div class="modal-header">
-            <div class="modal-header-title">
-                <i class="fa-solid fa-map-location-dot"></i>
-                <h3>Pilih Lokasi Anda</h3>
-            </div>
+            <h3><i class="fa-solid fa-location-dot"></i> Pilih Lokasi</h3>
             <button type="button" class="btn-close-modal" onclick="TemuJasa.closeLocationModal()">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
         <div class="modal-body">
-            <p class="modal-subtitle">Pilih wilayah untuk menampilkan UMKM dan jasa terdekat di sekitar Anda.</p>
-            <div class="location-search-input">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="locSearchInput" placeholder="Cari kecamatan / kelurahan..." oninput="TemuJasa.filterLocations(this.value)">
-            </div>
-            <div class="location-list" id="locationList">
-                <button type="button" class="loc-item active" onclick="TemuJasa.selectLocation('Bintan Timur', 'Bintan')">
-                    <div class="loc-item-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="loc-item-info">
-                        <strong>Bintan Timur</strong>
-                        <span>Kabupaten Bintan, Kepulauan Riau</span>
-                    </div>
-                    <i class="fa-solid fa-check loc-check"></i>
-                </button>
-                <button type="button" class="loc-item" onclick="TemuJasa.selectLocation('Tanjungpinang Kota', 'Tanjungpinang')">
-                    <div class="loc-item-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="loc-item-info">
-                        <strong>Tanjungpinang Kota</strong>
-                        <span>Kota Tanjungpinang, Kepulauan Riau</span>
-                    </div>
-                    <i class="fa-solid fa-check loc-check"></i>
-                </button>
-                <button type="button" class="loc-item" onclick="TemuJasa.selectLocation('Bintan Utara', 'Bintan')">
-                    <div class="loc-item-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="loc-item-info">
-                        <strong>Bintan Utara (Tanjung Uban)</strong>
-                        <span>Kabupaten Bintan, Kepulauan Riau</span>
-                    </div>
-                    <i class="fa-solid fa-check loc-check"></i>
-                </button>
-                <button type="button" class="loc-item" onclick="TemuJasa.selectLocation('Toapaya', 'Bintan')">
-                    <div class="loc-item-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="loc-item-info">
-                        <strong>Toapaya</strong>
-                        <span>Kabupaten Bintan, Kepulauan Riau</span>
-                    </div>
-                    <i class="fa-solid fa-check loc-check"></i>
-                </button>
-                <button type="button" class="loc-item" onclick="TemuJasa.selectLocation('Batam Kota', 'Batam')">
-                    <div class="loc-item-icon"><i class="fa-solid fa-location-dot"></i></div>
-                    <div class="loc-item-info">
-                        <strong>Batam Kota</strong>
-                        <span>Kota Batam, Kepulauan Riau</span>
-                    </div>
-                    <i class="fa-solid fa-check loc-check"></i>
-                </button>
+            <button type="button" class="btn-gps-location" onclick="TemuJasa.useGPSLocation()">
+                <i class="fa-solid fa-crosshairs"></i>
+                <span>Gunakan Lokasi Saat Ini (GPS)</span>
+            </button>
+            <div class="location-divider"><span>atau pilih kecamatan</span></div>
+            <div class="location-list">
+                <button type="button" class="location-item" onclick="TemuJasa.selectLocation('Bintan Timur')">Bintan Timur</button>
+                <button type="button" class="location-item" onclick="TemuJasa.selectLocation('Bintan Utara')">Bintan Utara</button>
+                <button type="button" class="location-item" onclick="TemuJasa.selectLocation('Teluk Bintan')">Teluk Bintan</button>
+                <button type="button" class="location-item" onclick="TemuJasa.selectLocation('Gunung Kijang')">Gunung Kijang</button>
+                <button type="button" class="location-item" onclick="TemuJasa.selectLocation('Toapaya')">Toapaya</button>
+                <button type="button" class="location-item" onclick="TemuJasa.selectLocation('Semua Lokasi')">Semua Lokasi</button>
             </div>
         </div>
     </div>
 
-
-    <!-- ================= MODAL DAFTAR MITRA ================= -->
-    <div class="modal-overlay" id="mitraModalOverlay" onclick="TemuJasa.closeMitraModal()"></div>
-    <div class="modal-dialog mitra-modal" id="mitraModal">
-
-        <!-- STEP 1: FORM -->
-        <div id="mitraFormStep">
-            <div class="modal-header">
-                <div class="modal-header-title">
-                    <i class="fa-solid fa-store"></i>
-                    <h3>Daftar Jadi Mitra TemuJasa</h3>
-                </div>
-                <button type="button" class="btn-close-modal" onclick="TemuJasa.closeMitraModal()">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p class="modal-subtitle">Isi data usaha Anda. Tim kami akan menghubungi dalam 1x24 jam.</p>
-
-                <form id="mitraForm" onsubmit="TemuJasa.submitMitraForm(event)" novalidate>
-
-                    <div class="mitra-form-grid">
-                        <div class="mitra-field">
-                            <label for="mitraNama">Nama Pemilik <span class="required">*</span></label>
-                            <input type="text" id="mitraNama" placeholder="Contoh: Budi Santoso" maxlength="80">
-                            <span class="field-error" id="errNama"></span>
-                        </div>
-
-                        <div class="mitra-field">
-                            <label for="mitraHP">Nomor WhatsApp <span class="required">*</span></label>
-                            <input type="tel" id="mitraHP" placeholder="Contoh: 08123456789" maxlength="15">
-                            <span class="field-error" id="errHP"></span>
-                        </div>
-
-                        <div class="mitra-field full-width">
-                            <label for="mitraNamaUsaha">Nama Usaha <span class="required">*</span></label>
-                            <input type="text" id="mitraNamaUsaha" placeholder="Contoh: Warung Bu Sari" maxlength="100">
-                            <span class="field-error" id="errNamaUsaha"></span>
-                        </div>
-
-                        <div class="mitra-field">
-                            <label for="mitraKategori">Kategori Usaha <span class="required">*</span></label>
-                            <select id="mitraKategori">
-                                <option value="">-- Pilih Kategori --</option>
-                                <option value="Kuliner & Makanan">Kuliner & Makanan</option>
-                                <option value="Minuman & Kopi">Minuman & Kopi</option>
-                                <option value="Jasa Servis & Montir">Jasa Servis & Montir</option>
-                                <option value="Laundry & Kebersihan">Laundry & Kebersihan</option>
-                                <option value="Tenaga Harian">Tenaga Harian</option>
-                                <option value="Sembako & Kebutuhan">Sembako & Kebutuhan</option>
-                                <option value="Fashion & Pakaian">Fashion & Pakaian</option>
-                                <option value="Lainnya">Lainnya</option>
-                            </select>
-                            <span class="field-error" id="errKategori"></span>
-                        </div>
-
-                        <div class="mitra-field">
-                            <label for="mitraLokasi">Wilayah / Kecamatan <span class="required">*</span></label>
-                            <select id="mitraLokasi">
-                                <option value="">-- Pilih Wilayah --</option>
-                                <option value="Bintan Timur">Bintan Timur</option>
-                                <option value="Tanjungpinang Kota">Tanjungpinang Kota</option>
-                                <option value="Bintan Utara">Bintan Utara</option>
-                                <option value="Toapaya">Toapaya</option>
-                                <option value="Batam Kota">Batam Kota</option>
-                            </select>
-                            <span class="field-error" id="errLokasi"></span>
-                        </div>
-
-                        <div class="mitra-field full-width">
-                            <label for="mitraDeskripsi">Deskripsi Singkat Usaha</label>
-                            <textarea id="mitraDeskripsi" rows="3" placeholder="Ceritakan usaha Anda secara singkat..." maxlength="300"></textarea>
-                            <span class="field-char-count" id="mitraCharCount">0 / 300</span>
-                        </div>
-                    </div>
-
-                    <div class="mitra-form-footer">
-                        <button type="button" class="btn-mitra-cancel" onclick="TemuJasa.closeMitraModal()">Batal</button>
-                        <button type="submit" class="btn-mitra-submit" id="btnMitraSubmit">
-                            <i class="fa-brands fa-whatsapp"></i>
-                            Kirim via WhatsApp
-                        </button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
-
-        <!-- STEP 2: SUKSES -->
-        <div id="mitraSuccessStep" style="display:none;">
-            <div class="mitra-success-body">
-                <div class="mitra-success-icon">
-                    <i class="fa-solid fa-circle-check"></i>
-                </div>
-                <h3>Pendaftaran Terkirim!</h3>
-                <p>Data usaha Anda telah dikirim ke tim TemuJasa via WhatsApp. Kami akan menghubungi Anda dalam <strong>1x24 jam</strong>.</p>
-                <div class="mitra-success-info" id="mitraSuccessInfo"></div>
-                <button type="button" class="btn-mitra-submit" onclick="TemuJasa.closeMitraModal()">
-                    Tutup
-                </button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- ================= TOAST NOTIFICATION CONTAINER ================= -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    
     <script src="./js/auth.js" defer></script>
+    <script>
+        function searchTemuJasa(query) {
+            const q = query || document.getElementById('mainSearch')?.value || document.getElementById('navSearchInput')?.value || '';
+            window.location.href = './jasa/cari/?q=' + encodeURIComponent(q);
+        }
+    </script>
 </body>
 </html>
-
-
