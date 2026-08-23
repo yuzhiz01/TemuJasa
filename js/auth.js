@@ -217,10 +217,13 @@ const TJAuth = {
                 const result = await TJAuth.register(name, email, password, role);
                 if (result.success) {
                     const msg = result.source === 'database'
-                        ? 'Registrasi berhasil ke database InfinityFree! Mengalihkan...'
-                        : 'Registrasi berhasil! Mengalihkan...';
+                        ? 'Registrasi berhasil ke database InfinityFree! Mengalihkan ke Dashboard...'
+                        : 'Registrasi berhasil! Mengalihkan ke Dashboard...';
                     TJAuth.showNotification(msg, 'success');
-                    setTimeout(() => { window.location.href = TJAuth.getBaseUrl(); }, 1200);
+                    const targetDashboard = (result.user?.role === 'penyedia' || role === 'penyedia')
+                        ? 'penyedia/dashboard/'
+                        : 'pelanggan/dashboard/';
+                    setTimeout(() => { window.location.href = TJAuth.getBaseUrl() + targetDashboard; }, 1200);
                 } else {
                     TJAuth.showNotification(result.message, 'error');
                     if (submitBtn) {
@@ -266,7 +269,10 @@ const TJAuth = {
                 const result = await TJAuth.login(email, password);
                 if (result.success) {
                     TJAuth.showNotification('Login berhasil! Selamat datang, ' + result.user.name, 'success');
-                    setTimeout(() => { window.location.href = TJAuth.getBaseUrl(); }, 1200);
+                    const targetDashboard = result.user?.role === 'penyedia'
+                        ? 'penyedia/dashboard/'
+                        : 'pelanggan/dashboard/';
+                    setTimeout(() => { window.location.href = TJAuth.getBaseUrl() + targetDashboard; }, 1200);
                 } else {
                     TJAuth.showNotification(result.message, 'error');
                     if (submitBtn) {
@@ -289,14 +295,16 @@ const TJAuth = {
         const session = this.getSession();
         if (!session) return;
 
+        const dashPath = session.role === 'penyedia' ? 'penyedia/dashboard/' : 'pelanggan/dashboard/';
+
         // Replace login/register buttons with user info
         const loginBtn = document.querySelector('.btn-header-login');
         const registerBtn = document.querySelector('.btn-header-register');
         
-        if (loginBtn && registerBtn) {
-            const parent = loginBtn.parentElement;
-            loginBtn.remove();
-            registerBtn.remove();
+        if (loginBtn || registerBtn) {
+            const parent = (loginBtn || registerBtn).parentElement;
+            if (loginBtn) loginBtn.remove();
+            if (registerBtn) registerBtn.remove();
 
             const userEl = document.createElement('div');
             userEl.className = 'navbar-user-menu';
@@ -313,6 +321,8 @@ const TJAuth = {
                         <span class="navbar-user-role">${session.role === 'penyedia' ? 'Penyedia Jasa' : 'Pelanggan'}</span>
                     </div>
                     <div class="navbar-user-divider"></div>
+                    <a href="${TJAuth.getBaseUrl()}${dashPath}" class="navbar-user-item"><i class="fa-solid fa-gauge-high"></i> Dashboard Saya</a>
+                    <a href="${TJAuth.getBaseUrl()}jasa/cari/" class="navbar-user-item"><i class="fa-solid fa-magnifying-glass"></i> Cari Jasa</a>
                     <a href="${TJAuth.getBaseUrl()}" class="navbar-user-item"><i class="fa-solid fa-home"></i> Beranda</a>
                     <button type="button" class="navbar-user-item navbar-user-logout" onclick="TJAuth.logout()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
                 </div>
@@ -320,13 +330,14 @@ const TJAuth = {
             parent.appendChild(userEl);
         }
 
-        // Update mobile nav login link
-        const mobileLogin = document.querySelector('.mobile-nav-item[href*="/login"], .mobile-nav-item[href*="login"]');
+        // Update mobile nav login link to point to user dashboard
+        const mobileLogin = document.querySelector('.mobile-nav-item[href*="/login"], .mobile-nav-item[href*="login"], #mobileNavAuth, #mobileAuthLink');
         if (mobileLogin) {
-            mobileLogin.outerHTML = `<a href="javascript:void(0)" class="mobile-nav-item" onclick="TJAuth.logout()">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Keluar</span>
-            </a>`;
+            mobileLogin.href = `${TJAuth.getBaseUrl()}${dashPath}`;
+            const span = mobileLogin.querySelector('span');
+            if (span) span.innerText = 'Dashboard';
+            const icon = mobileLogin.querySelector('i');
+            if (icon) icon.className = 'fa-solid fa-gauge-high';
         }
     },
 

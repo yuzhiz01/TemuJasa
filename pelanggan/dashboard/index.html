@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pelanggan — TemuJasa</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/temujasa.css">
+    <link rel="stylesheet" href="../../css/dashboard.css">
+    <link rel="stylesheet" href="../../css/auth.css">
+    <style>
+        .order-item-box {
+            background: #fff;
+            border: 1px solid #eae7f2;
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            transition: all 0.2s;
+        }
+        .order-item-box:hover {
+            border-color: #c9bcf0;
+            box-shadow: 0 4px 14px rgba(79,42,168,0.06);
+        }
+        .status-pill {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .status-pill.menunggu { background: #fef3c7; color: #b45309; }
+        .status-pill.proses { background: #dbeafe; color: #1d4ed8; }
+        .status-pill.selesai { background: #d1fae5; color: #047857; }
+    </style>
+</head>
+<body class="dashboard-body">
+
+    <!-- SIDEBAR OVERLAY FOR MOBILE -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="TJDash.toggleSidebar()"></div>
+
+    <div class="dash-layout">
+        <!-- SIDEBAR -->
+        <aside class="dash-sidebar" id="dashSidebar">
+            <div class="dash-sidebar-brand">
+                <a href="../../" class="logo">
+                    <div class="logo-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <span>TemuJasa</span>
+                </a>
+            </div>
+
+            <div class="dash-user-card">
+                <div class="dash-user-avatar" id="sidebarAvatar">U</div>
+                <div class="dash-user-info">
+                    <strong id="sidebarUserName">Pengguna</strong>
+                    <span class="badge-role role-pelanggan">Pelanggan</span>
+                </div>
+            </div>
+
+            <nav class="dash-sidebar-nav">
+                <span class="sidebar-nav-section">Menu Utama</span>
+                <a href="../../pelanggan/dashboard/" class="sidebar-nav-item active">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../../jasa/cari/" class="sidebar-nav-item">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Cari Jasa</span>
+                </a>
+
+                <span class="sidebar-nav-section">Aktivitas</span>
+                <a href="../../pelanggan/dashboard/" class="sidebar-nav-item">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span>Pesanan Saya</span>
+                </a>
+
+                <span class="sidebar-nav-section">Navigasi</span>
+                <a href="../../" class="sidebar-nav-item">
+                    <i class="fa-solid fa-globe"></i>
+                    <span>Halaman Utama</span>
+                </a>
+                <a href="javascript:void(0)" class="sidebar-nav-item" onclick="TJAuth.logout()" style="color:#e24a4a;">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Keluar (Logout)</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- MAIN DASHBOARD CONTENT -->
+        <div class="dash-main">
+            <!-- TOP BAR -->
+            <header class="dash-topbar">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <button type="button" class="btn-sidebar-toggle" onclick="TJDash.toggleSidebar()">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <div>
+                        <h1 class="dash-page-title" id="pageTitle">Dashboard Pelanggan</h1>
+                        <p class="dash-page-subtitle" id="pageSubtitle">Kelola pesanan dan temukan jasa terbaik</p>
+                    </div>
+                </div>
+
+                <div class="dash-topbar-actions">
+                    <a href="../../jasa/cari/" class="btn-primary" style="padding:10px 18px;font-size:13px;border-radius:10px;">
+                        <i class="fa-solid fa-magnifying-glass"></i> Pesan Jasa Baru
+                    </a>
+                </div>
+            </header>
+
+            <!-- STATS OVERVIEW -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon bg-primary-soft"><i class="fa-solid fa-bag-shopping"></i></div>
+                    <div class="stat-info">
+                        <span>Total Pesanan</span>
+                        <strong id="statTotalOrders">0</strong>
+                        <small>Semua transaksi</small>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-blue-soft"><i class="fa-solid fa-clock"></i></div>
+                    <div class="stat-info">
+                        <span>Dalam Proses</span>
+                        <strong id="statActiveOrders">0</strong>
+                        <small>Sedang dikerjakan</small>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon bg-emerald-soft"><i class="fa-solid fa-circle-check"></i></div>
+                    <div class="stat-info">
+                        <span>Pesanan Selesai</span>
+                        <strong id="statCompletedOrders">0</strong>
+                        <small>Layanan terselesaikan</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PESANAN SAYA -->
+            <div class="dash-card" style="margin-top:24px;">
+                <div class="dash-card-header">
+                    <span class="dash-card-title"><i class="fa-solid fa-list-check" style="color:#4f2aa8;margin-right:8px;"></i> Daftar Pesanan Anda</span>
+                    <a href="../../jasa/cari/" style="font-size:12px;font-weight:600;color:#4f2aa8;">+ Cari Jasa Lainnya</a>
+                </div>
+
+                <div id="ordersListContainer">
+                    <!-- Dynamic Orders -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM MOBILE NAVIGATION -->
+    <nav class="mobile-nav">
+        <a href="../../" class="mobile-nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>Beranda</span>
+        </a>
+        <a href="../../jasa/cari/" class="mobile-nav-item">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <span>Cari Jasa</span>
+        </a>
+        <a href="../../pelanggan/dashboard/" class="mobile-nav-item active">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>Pesanan</span>
+        </a>
+        <a href="javascript:void(0)" class="mobile-nav-item" onclick="TJAuth.logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Keluar</span>
+        </a>
+    </nav>
+
+    <script src="../../js/dashboard.js" defer></script>
+    <script src="../../js/auth.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const session = TJAuth.getSession();
+            if (!session) {
+                // If not logged in, prompt user gently
+                TJAuth.showNotification('Silakan login terlebih dahulu untuk membuka dashboard.', 'error');
+                setTimeout(() => { window.location.href = '../../login/'; }, 1200);
+                return;
+            }
+
+            // Populate User Info
+            document.getElementById('sidebarUserName').innerText = session.name;
+            document.getElementById('sidebarAvatar').innerText = session.name.substring(0, 2).toUpperCase();
+            document.getElementById('pageSubtitle').innerText = 'Selamat datang kembali, ' + session.name;
+
+            // Load Orders
+            renderCustomerOrders(session);
+        });
+
+        function renderCustomerOrders(session) {
+            const orders = JSON.parse(localStorage.getItem('temujasa_orders')) || [];
+            const userOrders = orders.filter(o => o.customerEmail === session.email || !o.customerEmail);
+
+            document.getElementById('statTotalOrders').innerText = userOrders.length;
+            document.getElementById('statActiveOrders').innerText = userOrders.filter(o => o.status !== 'Selesai' && o.status !== 'Dibatalkan').length;
+            document.getElementById('statCompletedOrders').innerText = userOrders.filter(o => o.status === 'Selesai').length;
+
+            const container = document.getElementById('ordersListContainer');
+            if (userOrders.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:40px 20px;color:#777;">
+                        <i class="fa-solid fa-box-open" style="font-size:48px;color:#d1c4f5;margin-bottom:14px;"></i>
+                        <p style="font-size:14px;font-weight:600;color:#333;">Belum ada riwayat pesanan</p>
+                        <p style="font-size:12px;margin-bottom:16px;">Mulai pesan jasa terpercaya sekarang dengan mudah.</p>
+                        <a href="../../jasa/cari/" class="btn-primary" style="display:inline-block;padding:8px 20px;border-radius:10px;">Jelajahi Jasa</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = userOrders.map(o => `
+                <div class="order-item-box">
+                    <div>
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+                            <strong style="font-size:15px;color:#1e192c;">${o.serviceName}</strong>
+                            <span class="status-pill ${o.status === 'Selesai' ? 'selesai' : (o.status === 'Sedang Dikerjakan' ? 'proses' : 'menunggu')}">${o.status}</span>
+                        </div>
+                        <div style="font-size:12px;color:#666;">
+                            <span><i class="fa-solid fa-user-tie"></i> Penyedia: <strong>${o.providerName}</strong></span>
+                            <span style="margin:0 6px;">&bull;</span>
+                            <span><i class="fa-solid fa-calendar"></i> ${new Date(o.orderDate || o.created_at).toLocaleDateString('id-ID', { dateStyle: 'medium' })}</span>
+                        </div>
+                        <div style="font-size:12px;color:#777;margin-top:4px;">
+                            <i class="fa-solid fa-location-dot"></i> ${o.address || 'Alamat pengerjaan'}
+                        </div>
+                    </div>
+                    <div style="text-align:right;">
+                        <div style="font-size:16px;font-weight:800;color:#4f2aa8;margin-bottom:6px;">
+                            Rp ${Number(o.price || 0).toLocaleString('id-ID')}
+                        </div>
+                        <button type="button" class="btn-secondary btn-sm" onclick="TJAuth.showNotification('Penyedia jasa sedang mempersiapkan pesanan Anda.', 'success')">
+                            <i class="fa-solid fa-eye"></i> Detail Pesanan
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
