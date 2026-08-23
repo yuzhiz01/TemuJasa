@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -25,22 +25,20 @@
             <p class="auth-subtitle">Masuk ke akun TemuJasa Anda</p>
         </div>
 
-        
-        <form method="POST" action="../login/" class="auth-form">
-            <input type="hidden" name="_token" value="C3p11LSXg7NP3tFKSoNXhrxsk635ys48NaVA4fi9" autocomplete="off">
+        <form class="auth-form" onsubmit="return false;">
             <div class="auth-form-group">
                 <label for="email">Email</label>
                 <input
                     id="email"
                     type="email"
                     name="email"
-                    class="auth-input "
+                    class="auth-input"
                     placeholder="nama@email.com"
                     value=""
                     required
                     autofocus
                 >
-                            </div>
+            </div>
 
             <div class="auth-form-group">
                 <label for="password">Password</label>
@@ -49,7 +47,7 @@
                         id="password"
                         type="password"
                         name="password"
-                        class="auth-input "
+                        class="auth-input"
                         placeholder="Masukkan password"
                         required
                     >
@@ -57,11 +55,11 @@
                         <i class="fa-regular fa-eye-slash"></i>
                     </button>
                 </div>
-                            </div>
+            </div>
 
             <div class="auth-options">
                 <label class="auth-check">
-                    <input type="checkbox" name="remember" value="1" >
+                    <input type="checkbox" name="remember" value="1">
                     <span>Ingat saya</span>
                 </label>
                 <a href="#">Lupa password?</a>
@@ -82,5 +80,3 @@
     <script src="../js/auth.js" defer></script>
 </body>
 </html>
-
-

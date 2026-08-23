@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -23,29 +23,28 @@
             <p class="auth-subtitle">Buat akun untuk menampilkan layanan Anda</p>
         </div>
 
-        
-        <form method="POST" action="../../register/" class="auth-form">
-            <input type="hidden" name="_token" value="C3p11LSXg7NP3tFKSoNXhrxsk635ys48NaVA4fi9" autocomplete="off">            <input type="hidden" name="role" value="penyedia">
+        <form class="auth-form" onsubmit="return false;">
+            <input type="hidden" name="role" value="penyedia">
 
             <div class="auth-form-group">
                 <label for="name">Nama Lengkap</label>
-                <input id="name" type="text" name="name" class="auth-input " value="" placeholder="Masukkan nama lengkap" required>
-                            </div>
+                <input id="name" type="text" name="name" class="auth-input" value="" placeholder="Masukkan nama lengkap" required>
+            </div>
 
             <div class="auth-form-group">
                 <label for="email">Email</label>
-                <input id="email" type="email" name="email" class="auth-input " value="" placeholder="nama@email.com" required>
-                            </div>
+                <input id="email" type="email" name="email" class="auth-input" value="" placeholder="nama@email.com" required>
+            </div>
 
             <div class="auth-form-group">
                 <label for="password">Password</label>
                 <div class="auth-input-wrap">
-                    <input id="password" type="password" name="password" class="auth-input " placeholder="Minimal 6 karakter" required>
+                    <input id="password" type="password" name="password" class="auth-input" placeholder="Minimal 6 karakter" required>
                     <button class="btn-toggle-pw" type="button" aria-label="Lihat password" onclick="TJDash.togglePassword(this)">
                         <i class="fa-regular fa-eye-slash"></i>
                     </button>
                 </div>
-                            </div>
+            </div>
 
             <div class="auth-form-group">
                 <label for="password_confirmation">Konfirmasi Password</label>
@@ -69,5 +68,3 @@
     <script src="../../js/auth.js" defer></script>
 </body>
 </html>
-
-
