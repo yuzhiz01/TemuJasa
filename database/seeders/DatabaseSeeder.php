@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -25,22 +24,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Kategori Jasa
-        $categories = [
-            'Elektronik',
-            'Otomotif',
-            'Rumah Tangga',
-            'Kebersihan',
-            'AC & Pendingin',
-            'Renovasi & Perbaikan',
-            'Kecantikan & Kesehatan',
-            'Acara & Event',
-            'Pendidikan & Les',
-            'Lainnya',
-        ];
-
-        foreach ($categories as $name) {
-            Category::firstOrCreate(['name' => $name]);
-        }
+        // Tidak ada data dummy/contoh — kategori & jasa diisi langsung oleh pengguna
+        // melalui aplikasi (admin/penyedia), bukan oleh seeder.
     }
 }
