@@ -9,7 +9,9 @@ return new class extends Migration
     public function up(): void
     {
         // ── ORDERS: pastikan provider_id NOT NULL (FK sudah cascade) ──
-        \Illuminate\Support\Facades\DB::statement('ALTER TABLE `orders` MODIFY `provider_id` BIGINT UNSIGNED NOT NULL');
+        if (\Illuminate\Support\Facades\DB::getDriverName() === 'mysql') {
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE `orders` MODIFY `provider_id` BIGINT UNSIGNED NOT NULL');
+        }
 
         // ── REVIEWS: ikat review ke jasa ─────────────────────
         Schema::table('reviews', function (Blueprint $table) {
@@ -83,7 +85,9 @@ return new class extends Migration
             $table->dropForeign(['option_id']);
             $table->dropColumn(['order_code', 'service_id', 'option_id', 'scheduled_at', 'address']);
         });
-        \Illuminate\Support\Facades\DB::statement('ALTER TABLE `orders` MODIFY `provider_id` BIGINT UNSIGNED NULL');
+        if (\Illuminate\Support\Facades\DB::getDriverName() === 'mysql') {
+            \Illuminate\Support\Facades\DB::statement('ALTER TABLE `orders` MODIFY `provider_id` BIGINT UNSIGNED NULL');
+        }
         Schema::table('orders', function (Blueprint $table) {
             $table->dropForeign(['provider_id']);
             $table->foreign('provider_id')->references('id')->on('users')->nullOnDelete();

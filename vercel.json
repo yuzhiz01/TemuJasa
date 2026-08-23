@@ -28,6 +28,6 @@
         "CACHE_STORE": "array",
         "CACHE_DRIVER": "array",
         "QUEUE_CONNECTION": "sync",
-        "DB_CONNECTION": "mysql"
+        "DB_CONNECTION": "sqlite"
     }
 }
