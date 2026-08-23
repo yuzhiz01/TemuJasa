@@ -314,6 +314,45 @@
             const q = query || document.getElementById('mainSearch')?.value || document.getElementById('navSearchInput')?.value || '';
             window.location.href = './jasa/cari/?q=' + encodeURIComponent(q);
         }
+
+        // Sinkronisasi: tampilkan penyedia jasa dari database online (InfinityFree)
+        (async () => {
+            const grid = document.getElementById('providersGrid');
+            if (!grid) return;
+            try {
+                const res = await fetch('https://temujasa.great-site.net/infinityfree-api/services.php', { cache: 'no-store' });
+                const json = await res.json();
+                if (json && json.success) {
+                    const providers = new Map();
+                    (json.services || []).forEach(s => {
+                        if (!s.provider_id) return;
+                        if (!providers.has(s.provider_id)) {
+                            providers.set(s.provider_id, { name: s.provider_name || 'Penyedia Jasa', count: 0 });
+                        }
+                        providers.get(s.provider_id).count++;
+                    });
+                    grid.innerHTML = [...providers.entries()].map(([id, p]) => `
+                        <a class="business-card" href="./penyedia-profil/${id}/">
+                            <div class="business-image" style="background:#f0ecff;display:flex;align-items:center;justify-content:center;min-height:120px;">
+                                <i class="fa-solid fa-user-tie" style="font-size:48px;color:#4f2aa8;"></i>
+                            </div>
+                            <div class="business-info">
+                                <h3>${String(p.name).replace(/</g, '&lt;')}</h3>
+                                <p>Penyedia Jasa</p>
+                                <div class="business-meta">
+                                    <span><i class="fa-solid fa-bag-shopping"></i> ${p.count} pesanan</span>
+                                    <span><i class="fa-solid fa-eye"></i> Lihat profil</span>
+                                </div>
+                            </div>
+                        </a>`).join('');
+                    if (providers.size === 0) {
+                        grid.innerHTML = '<p style="color:#777;padding:12px;">Belum ada penyedia jasa terdaftar.</p>';
+                    }
+                }
+            } catch (e) {
+                console.warn('Gagal memuat penyedia dari server.', e);
+            }
+        })();
     </script>
 </body>
 </html>

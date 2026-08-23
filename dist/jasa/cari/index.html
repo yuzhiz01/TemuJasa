@@ -406,17 +406,42 @@
     <script src="../../js/temujasa.js" defer></script>
     <script src="../../js/auth.js" defer></script>
     <script>
-        // Database jasa — diisi dinamis (localStorage / API). Tidak ada data dummy.
+        // Database jasa — diambil dari API pusat agar sinkron di semua device
         const defaultServices = [];
+
+        // Sinkronisasi: ambil jasa terbaru dari database online (InfinityFree)
+        let remoteServices = [];
+        (async () => {
+            try {
+                const res = await fetch('https://temujasa.great-site.net/infinityfree-api/services.php', { cache: 'no-store' });
+                const json = await res.json();
+                if (json && json.success) {
+                    remoteServices = (json.services || []).map(s => ({
+                        id: 'r' + s.id,
+                        title: s.title,
+                        category: s.category_name || '',
+                        provider: s.provider_name || 'Penyedia Jasa',
+                        providerId: s.provider_id,
+                        price: Number(s.price) || 0,
+                        icon: s.icon || 'fa-tag',
+                        location: s.location || ''
+                    }));
+                    filterServices();
+                }
+            } catch (e) {
+                console.warn('Gagal memuat data dari server, memakai data lokal.', e);
+            }
+        })();
+
 
         let currentActiveService = null;
 
         function loadServicesFromStorage() {
             try {
                 const customServices = JSON.parse(localStorage.getItem('temujasa_custom_services')) || [];
-                return [...customServices, ...defaultServices];
+                return [...remoteServices, ...customServices, ...defaultServices];
             } catch (e) {
-                return defaultServices;
+                return [...remoteServices, ...defaultServices];
             }
         }
 
