@@ -406,17 +406,8 @@
     <script src="../../js/temujasa.js" defer></script>
     <script src="../../js/auth.js" defer></script>
     <script>
-        // Sample & Dynamic Services Database
-        const defaultServices = [
-            { id: 1, title: 'Service Cuci & Tambah Freon AC', category: 'AC & Pendingin', provider: 'Fauzi Qurniawan', providerId: 4, price: 75000, icon: 'fa-snowflake', location: 'Jakarta Selatan' },
-            { id: 2, title: 'Perbaikan Instalasi Listrik Rumah', category: 'Elektronik', provider: 'Renaldy fransius', providerId: 2, price: 120000, icon: 'fa-bolt', location: 'Tangerang' },
-            { id: 3, title: 'Pembersihan Rumah / Deep Cleaning', category: 'Kebersihan', provider: 'Fauzi Qurniawan', providerId: 4, price: 150000, icon: 'fa-broom', location: 'Jakarta Pusat' },
-            { id: 4, title: 'Service Tune Up & Ganti Oli Motor', category: 'Otomotif', provider: 'Renaldy fransius', providerId: 2, price: 90000, icon: 'fa-car', location: 'Jakarta Barat' },
-            { id: 5, title: 'Tukang Cat & Renovasi Dinding', category: 'Renovasi & Perbaikan', provider: 'Renaldy fransius', providerId: 2, price: 250000, icon: 'fa-hammer', location: 'Bekasi' },
-            { id: 6, title: 'Sedot WC & Saluran Mampet', category: 'Rumah Tangga', provider: 'Fauzi Qurniawan', providerId: 4, price: 300000, icon: 'fa-toilet', location: 'Depok' },
-            { id: 7, title: 'Les Privat Matematika & Sains SD-SMP', category: 'Pendidikan & Les', provider: 'Fauzi Qurniawan', providerId: 4, price: 80000, icon: 'fa-book-open', location: 'Jakarta Selatan' },
-            { id: 8, title: 'Potong Rambut & Grooming Panggilan', category: 'Kecantikan & Kesehatan', provider: 'Renaldy fransius', providerId: 2, price: 50000, icon: 'fa-scissors', location: 'Jakarta Timur' }
-        ];
+        // Database jasa — diisi dinamis (localStorage / API). Tidak ada data dummy.
+        const defaultServices = [];
 
         let currentActiveService = null;
 
